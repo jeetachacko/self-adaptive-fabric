@@ -14,10 +14,10 @@ import (
 
 const pkgLogID = "orderer/common/resolver"
 
-var logger *logging.Logger
+//var logger *logging.Logger
 
 func init() {
-	logger = flogging.MustGetLogger(pkgLogID)
+	var logger = flogging.MustGetLogger(pkgLogID)
 }
 
 type Resolver interface {
