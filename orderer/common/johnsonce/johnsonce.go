@@ -9,7 +9,7 @@ package johnsonce
 import (
 	"github.com/hyperledger/fabric/common/flogging"
 	tscc "github.com/hyperledger/fabric/orderer/common/tarjanscc"
-	"github.com/op/go-logging"
+	//"github.com/op/go-logging"
 )
 
 const pkgLogID = "orderer/common/johnsonce"
