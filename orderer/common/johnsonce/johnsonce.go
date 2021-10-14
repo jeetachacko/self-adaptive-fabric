@@ -16,9 +16,9 @@ const pkgLogID = "orderer/common/johnsonce"
 
 //var logger *logging.Logger
 
-func init() {
-	var logger = flogging.MustGetLogger(pkgLogID)
-}
+// func init() {
+// 	var logger = flogging.MustGetLogger(pkgLogID)
+// }
 
 type JohnsonCE interface {
 	Run() (int32, []bool)

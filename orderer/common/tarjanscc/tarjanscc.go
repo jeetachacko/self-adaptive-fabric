@@ -20,9 +20,9 @@ const pkgLogID = "orderer/common/tarjanscc"
 
 //var logger *logging.Logger
 
-func init() {
-	var logger = flogging.MustGetLogger(pkgLogID)
-}
+// func init() {
+// 	var logger = flogging.MustGetLogger(pkgLogID)
+// }
 
 type ById []int32
 

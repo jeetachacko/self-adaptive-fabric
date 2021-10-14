@@ -16,9 +16,9 @@ const pkgLogID = "orderer/common/resolver"
 
 //var logger *logging.Logger
 
-func init() {
-	var logger = flogging.MustGetLogger(pkgLogID)
-}
+// func init() {
+// 	var logger = flogging.MustGetLogger(pkgLogID)
+// }
 
 type Resolver interface {
 	GetSchedule() ([]int32, []bool)
