@@ -14,11 +14,13 @@ import (
 	"github.com/hyperledger/fabric/common/flogging"
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/rwsetutil"
-	"github.com/hyperledger/fabric/protos/utils"
+	
+	"github.com/hyperledger/fabric/protoutil"
 
 	"github.com/hyperledger/fabric/orderer/common/resolver"
 
-	"github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset"
+	"github.com/hyperledger/fabric-protos-go/ledger/rwset"
+	"github.com/hyperledger/fabric-protos-go/ledger/rwset/kvrwset"
 )
 
 var logger = flogging.MustGetLogger("orderer.common.blockcutter")

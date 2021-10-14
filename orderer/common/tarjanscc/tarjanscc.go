@@ -12,7 +12,7 @@ package tarjanscc
 
 import (
 	"github.com/hyperledger/fabric/common/flogging"
-	"github.com/op/go-logging"
+	//"github.com/op/go-logging"
 	sort "sort"
 )
 
