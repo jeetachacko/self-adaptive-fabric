@@ -59,6 +59,8 @@ ZOOKEEPER_VER ?= 5.3.1
 .SUFFIXES:
 MAKEFLAGS += --no-builtin-rules
 
+REGISTRY_ADDR = jeetachacko
+
 BUILD_DIR ?= build
 
 EXTRA_VERSION ?= $(shell git rev-parse --short HEAD)
@@ -313,6 +315,25 @@ publish-images: $(RELEASE_IMAGES:%=%-publish-images)
 %-publish-images:
 	@docker login $(DOCKER_HUB_USERNAME) $(DOCKER_HUB_PASSWORD)
 	@docker push $(DOCKER_NS)/fabric-$*:$(PROJECT_VERSION)
+
+docker-tag-stable: $(IMAGES:%=%-docker-tag-stable)
+
+%-docker-tag-stable:
+	$(eval TARGET = ${patsubst %-docker-tag-stable,%,${@}})
+	docker tag $(DOCKER_NS)/fabric-$(TARGET):$(DOCKER_TAG) $(DOCKER_NS)/fabric-$(TARGET):stable
+
+docker-tag-local: $(IMAGES:%=%-docker-tag-local)
+
+%-docker-tag-local:
+	$(eval TARGET = ${patsubst %-docker-tag-local,%,${@}})
+	docker tag $(DOCKER_NS)/fabric-$(TARGET):$(DOCKER_TAG) $(REGISTRY_ADDR)/$(TARGET):local
+
+docker-push: $(IMAGES:%=%-docker-push)
+
+%-docker-push:
+	$(eval TARGET = ${patsubst %-docker-push,%,${@}})
+	docker push $(REGISTRY_ADDR)/$(TARGET):local
+
 
 .PHONY: clean
 clean: docker-clean unit-test-clean release-clean

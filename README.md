@@ -1,3 +1,7 @@
+# Self-adaptive fabric : Currently under developement
+This is a fork of Hyperledger fabric repository that is extended to support self-adaptivity
+All rights reserved. Chair for Application and Middleware Systems, Technical University of Munich
+
 # Hyperledger Fabric [![join the chat][rocketchat-image]][rocketchat-url]
 
 [rocketchat-url]: https://chat.hyperledger.org/channel/fabric

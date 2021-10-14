@@ -43,7 +43,7 @@ func TestUtilsBasic(t *testing.T) {
 	basicTest(t, BlockDataHashingStructureValue())
 	basicTest(t, OrdererAddressesValue([]string{"foo:1", "bar:2"}))
 	basicTest(t, ConsensusTypeValue("foo", []byte("bar")))
-	basicTest(t, BatchSizeValue(1, 2, 3))
+	basicTest(t, BatchSizeValue(1, 2, 3, 4, 5, 6))
 	basicTest(t, BatchTimeoutValue("1s"))
 	basicTest(t, ChannelRestrictionsValue(7))
 	basicTest(t, KafkaBrokersValue([]string{"foo:1", "bar:2"}))
@@ -123,6 +123,9 @@ func createCfgBlockWithSupportedCapabilities(t *testing.T) *cb.Block {
 				MaxMessageCount:   65535,
 				AbsoluteMaxBytes:  1024000000,
 				PreferredMaxBytes: 1024000000,
+				MaxUniqueKeys: 1024000000,
+				SetReorder: 0,
+				SetRateControl: 0,
 			}),
 		ModPolicy: AdminsPolicyKey,
 	}
@@ -237,6 +240,9 @@ func createCfgBlockWithUnsupportedCapabilities(t *testing.T) *cb.Block {
 				MaxMessageCount:   65535,
 				AbsoluteMaxBytes:  1024000000,
 				PreferredMaxBytes: 1024000000,
+				MaxUniqueKeys: 1024000000,
+				SetReorder: 0,
+				SetRateControl: 0,
 			}),
 		ModPolicy: AdminsPolicyKey,
 	}

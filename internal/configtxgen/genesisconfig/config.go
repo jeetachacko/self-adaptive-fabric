@@ -167,6 +167,9 @@ type BatchSize struct {
 	MaxMessageCount   uint32 `yaml:"MaxMessageCount"`
 	AbsoluteMaxBytes  uint32 `yaml:"AbsoluteMaxBytes"`
 	PreferredMaxBytes uint32 `yaml:"PreferredMaxBytes"`
+	MaxUniqueKeys uint32 `yaml:"MaxUniqueKeys"`
+	SetReorder uint32 `yaml:"SetReorder"`
+	SetRateControl uint32 `yaml:"SetRateControl"`
 }
 
 // Kafka contains configuration for the Kafka-based orderer.
@@ -182,6 +185,9 @@ var genesisDefaults = TopLevel{
 			MaxMessageCount:   500,
 			AbsoluteMaxBytes:  10 * 1024 * 1024,
 			PreferredMaxBytes: 2 * 1024 * 1024,
+			MaxUniqueKeys: 1024,
+			SetReorder: 0,
+			SetRateControl: 0,
 		},
 		Kafka: Kafka{
 			Brokers: []string{"127.0.0.1:9092"},
@@ -321,6 +327,9 @@ loop:
 		case ord.BatchSize.PreferredMaxBytes == 0:
 			logger.Infof("Orderer.BatchSize.PreferredMaxBytes unset, setting to %v", genesisDefaults.Orderer.BatchSize.PreferredMaxBytes)
 			ord.BatchSize.PreferredMaxBytes = genesisDefaults.Orderer.BatchSize.PreferredMaxBytes
+		case ord.BatchSize.MaxUniqueKeys == 0:
+			logger.Infof("Orderer.BatchSize.MaxUniqueKeys unset, setting to %v", genesisDefaults.Orderer.BatchSize.MaxUniqueKeys)
+			ord.BatchSize.MaxUniqueKeys = genesisDefaults.Orderer.BatchSize.MaxUniqueKeys
 		default:
 			break loop
 		}

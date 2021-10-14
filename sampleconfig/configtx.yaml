@@ -305,6 +305,12 @@ Orderer: &OrdererDefaults
         # preferred max bytes (up to AbsoluteMaxBytes), some batches may exceed
         # the preferred max bytes, but will always contain exactly one transaction.
         PreferredMaxBytes: 2 MB
+        # Maximum number of distinct keys allowed per block
+        MaxUniqueKeys: 1024
+        #Set reordering strategy. 0: No reordering, 1: Fabric++ reordering
+        SetReorder: 0
+        #Set percentage of rate control. 0: No rate control. 
+        SetRateControl: 0
 
     # Max Channels is the maximum number of channels to allow on the ordering
     # network. When set to 0, this implies no maximum number of channels.

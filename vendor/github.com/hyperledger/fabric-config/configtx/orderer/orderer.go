@@ -55,6 +55,11 @@ type BatchSize struct {
 	AbsoluteMaxBytes uint32
 	// PreferredMaxBytes is the preferred size of blocks.
 	PreferredMaxBytes uint32
+	MaxUniqueKeys uint32
+	SetReorder uint32
+	SetRateControl uint32
+
+
 }
 
 // Kafka is a list of Kafka broker endpoints.

@@ -116,6 +116,9 @@ type BatchSize struct {
 	// The byte count of the serialized messages in a batch should not
 	// exceed this value.
 	PreferredMaxBytes    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=preferredMaxBytes,proto3" json:"preferred_max_bytes,omitempty"`
+	MaxUniqueKeys    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=MaxUniqueKeys,proto3" json:"max_unique_keys,omitempty"`
+	SetReorder    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=SetReorder,proto3" json:"set_reorder,omitempty"`
+	SetRateControl    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=SetRateControl,proto3" json:"set_rate_control,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -163,6 +166,25 @@ func (m *BatchSize) GetAbsoluteMaxBytes() uint32 {
 func (m *BatchSize) GetPreferredMaxBytes() uint32 {
 	if m != nil {
 		return m.PreferredMaxBytes
+	}
+	return 0
+}
+
+func (m *BatchSize) GetMaxUniqueKeys() uint32 {
+	if m != nil {
+		return m.MaxUniqueKeys
+	}
+	return 0
+}
+func (m *BatchSize) GetSetReorder() uint32 {
+	if m != nil {
+		return m.SetReorder
+	}
+	return 0
+}
+func (m *BatchSize) GetSetRateControl() uint32 {
+	if m != nil {
+		return m.SetRateControl
 	}
 	return 0
 }

@@ -72,6 +72,9 @@ Orderer: &OrdererDefaults
         MaxMessageCount: 10
         AbsoluteMaxBytes: 10 MB
         PreferredMaxBytes: 512 KB
+        MaxUniqueKeys: 1024,
+        SetReorder: 0,
+        SetRateControl: 0,
     MaxChannels: 0
     EtcdRaft:
         Consenters:

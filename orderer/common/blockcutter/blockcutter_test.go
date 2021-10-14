@@ -47,6 +47,9 @@ var _ = Describe("Blockcutter", func() {
 			fakeConfig.BatchSizeReturns(&ab.BatchSize{
 				MaxMessageCount:   2,
 				PreferredMaxBytes: 100,
+				maxUniqueKeys: 1024,
+				setReorder: 0,
+				setRateControl: 0,
 			})
 
 			message = &cb.Envelope{Payload: []byte("Twenty Bytes of Data"), Signature: []byte("Twenty Bytes of Data")}
@@ -82,6 +85,9 @@ var _ = Describe("Blockcutter", func() {
 				fakeConfig.BatchSizeReturns(&ab.BatchSize{
 					MaxMessageCount:   3,
 					PreferredMaxBytes: 100,
+					maxUniqueKeys: 1024,
+					setReorder: 0,
+					setRateControl: 0,
 				})
 			})
 
@@ -101,6 +107,9 @@ var _ = Describe("Blockcutter", func() {
 				fakeConfig.BatchSizeReturns(&ab.BatchSize{
 					MaxMessageCount:   3,
 					PreferredMaxBytes: 30,
+					maxUniqueKeys: 1024,
+					setReorder: 0,
+					setRateControl: 0,
 				})
 			})
 
@@ -120,6 +129,9 @@ var _ = Describe("Blockcutter", func() {
 				fakeConfig.BatchSizeReturns(&ab.BatchSize{
 					MaxMessageCount:   3,
 					PreferredMaxBytes: 50,
+					maxUniqueKeys: 1024,
+					setReorder: 0,
+					setRateControl: 0,
 				})
 			})
 

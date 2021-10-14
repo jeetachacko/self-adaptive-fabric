@@ -149,6 +149,9 @@ Profiles:{{ range .Profiles }}
         MaxMessageCount: 1
         AbsoluteMaxBytes: 98 MB
         PreferredMaxBytes: 512 KB
+        MaxUniqueKeys: 1024
+        SetReorder: 0
+        SetRateControl: 0
       Capabilities:
         V2_0: true
       {{- if eq $w.Consensus.Type "kafka" }}

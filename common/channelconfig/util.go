@@ -120,13 +120,16 @@ func ConsensusTypeValue(consensusType string, consensusMetadata []byte) *Standar
 
 // BatchSizeValue returns the config definition for the orderer batch size.
 // It is a value for the /Channel/Orderer group.
-func BatchSizeValue(maxMessages, absoluteMaxBytes, preferredMaxBytes uint32) *StandardConfigValue {
+func BatchSizeValue(maxMessages, absoluteMaxBytes, preferredMaxBytes uint32, maxUniqueKeys uint32, setReorder uint32, setRateControl uint32) *StandardConfigValue {
 	return &StandardConfigValue{
 		key: BatchSizeKey,
 		value: &ab.BatchSize{
 			MaxMessageCount:   maxMessages,
 			AbsoluteMaxBytes:  absoluteMaxBytes,
 			PreferredMaxBytes: preferredMaxBytes,
+			MaxUniqueKeys: maxUniqueKeys,
+			SetReorder: setReorder,
+			SetRateControl: setRateControl,
 		},
 	}
 }

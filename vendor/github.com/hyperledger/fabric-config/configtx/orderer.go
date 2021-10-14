@@ -191,6 +191,9 @@ func (o *OrdererGroup) Configuration() (Orderer, error) {
 			MaxMessageCount:   batchSize.MaxMessageCount,
 			AbsoluteMaxBytes:  batchSize.AbsoluteMaxBytes,
 			PreferredMaxBytes: batchSize.PreferredMaxBytes,
+			MaxUniqueKeys: batchSize.MaxUniqueKeys,
+        	SetReorder: batchSize.SetReorder,
+        	SetRateControl: batchSize.SetRateControl,
 		},
 		Kafka:         kafkaBrokers,
 		EtcdRaft:      etcdRaft,
@@ -247,6 +250,48 @@ func (b *BatchSizeValue) SetPreferredMaxBytes(maxBytes uint32) error {
 	}
 
 	batchSize.PreferredMaxBytes = maxBytes
+	b.value.Value, err = proto.Marshal(batchSize)
+
+	return err
+}
+
+// SetMaxUniqueKeysMaxUniqueKeys sets an orderer configuration's batch size preferred size of blocks.
+func (b *BatchSizeValue) SetMaxUniqueKeys(maxBytes uint32) error {
+	batchSize := &ob.BatchSize{}
+	err := proto.Unmarshal(b.value.Value, batchSize)
+	if err != nil {
+		return err
+	}
+
+	batchSize.MaxUniqueKeys = maxBytes
+	b.value.Value, err = proto.Marshal(batchSize)
+
+	return err
+}
+
+// SetSetReorder sets an orderer configuration's batch size preferred size of blocks.
+func (b *BatchSizeValue) SetSetReorder(maxBytes uint32) error {
+	batchSize := &ob.BatchSize{}
+	err := proto.Unmarshal(b.value.Value, batchSize)
+	if err != nil {
+		return err
+	}
+
+	batchSize.SetReorder = maxBytes
+	b.value.Value, err = proto.Marshal(batchSize)
+
+	return err
+}
+
+// SetSetRateControl sets an orderer configuration's batch size preferred size of blocks.
+func (b *BatchSizeValue) SetSetRateControl(maxBytes uint32) error {
+	batchSize := &ob.BatchSize{}
+	err := proto.Unmarshal(b.value.Value, batchSize)
+	if err != nil {
+		return err
+	}
+
+	batchSize.SetRateControl = maxBytes
 	b.value.Value, err = proto.Marshal(batchSize)
 
 	return err
@@ -789,6 +834,9 @@ func addOrdererValues(ordererGroup *cb.ConfigGroup, o Orderer) error {
 		o.BatchSize.MaxMessageCount,
 		o.BatchSize.AbsoluteMaxBytes,
 		o.BatchSize.PreferredMaxBytes,
+		o.BatchSize.MaxUniqueKeys,
+		o.BatchSize.SetReorder,
+		o.BatchSize.SetRateControl,
 	), AdminsPolicyKey)
 	if err != nil {
 		return err
@@ -863,6 +911,9 @@ func batchSizeValue(maxMessages, absoluteMaxBytes, preferredMaxBytes uint32) *st
 			MaxMessageCount:   maxMessages,
 			AbsoluteMaxBytes:  absoluteMaxBytes,
 			PreferredMaxBytes: preferredMaxBytes,
+			MaxUniqueKeys: maxUniqueKeys,
+			SetReorder: setReorder,
+			SetRateControl: setRateControl,
 		},
 	}
 }
