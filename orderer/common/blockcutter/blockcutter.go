@@ -89,8 +89,8 @@ func NewReceiverImpl(channelID string, sharedConfigFetcher OrdererConfigFetcher,
 		txCounter:       0,
 		maxMessageCount: batchSize.MaxMessageCount,
 		maxUniqueKeys:   batchSize.MaxUniqueKeys,
-		setReorder:   batchSize.SetReorder
-		setRateControl:   batchSize.SetRateControl
+		setReorder:   batchSize.SetReorder,
+		setRateControl:   batchSize.SetRateControl,
 
 		txReadSet:  make([][]uint64, batchSize.MaxMessageCount),
 		txWriteSet: make([][]uint64, batchSize.MaxMessageCount),
