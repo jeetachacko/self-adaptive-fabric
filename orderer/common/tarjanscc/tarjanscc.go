@@ -11,7 +11,7 @@ package tarjanscc
 // This implementation assumes that the vertex ids are positive intergers > 0
 
 import (
-	"github.com/hyperledger/fabric/common/flogging"
+	// "github.com/hyperledger/fabric/common/flogging"
 	//"github.com/op/go-logging"
 	sort "sort"
 )

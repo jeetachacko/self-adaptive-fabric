@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 package johnsonce
 
 import (
-	"github.com/hyperledger/fabric/common/flogging"
+	// "github.com/hyperledger/fabric/common/flogging"
 	tscc "github.com/hyperledger/fabric/orderer/common/tarjanscc"
 	//"github.com/op/go-logging"
 )

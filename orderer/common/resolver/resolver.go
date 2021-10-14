@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 package resolver
 
 import (
-	"github.com/hyperledger/fabric/common/flogging"
+	// "github.com/hyperledger/fabric/common/flogging"
 	jce "github.com/hyperledger/fabric/orderer/common/johnsonce"
 	//"github.com/op/go-logging"
 )
