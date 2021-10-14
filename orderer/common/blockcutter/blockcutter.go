@@ -19,7 +19,7 @@ import (
 
 	"github.com/hyperledger/fabric/orderer/common/resolver"
 
-	"github.com/hyperledger/fabric-protos-go/ledger/rwset"
+	// "github.com/hyperledger/fabric-protos-go/ledger/rwset"
 	"github.com/hyperledger/fabric-protos-go/ledger/rwset/kvrwset"
 )
 
@@ -145,7 +145,7 @@ func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 	writeSet := make([]uint64, r.maxUniqueKeys/64)
 
 	if err == nil {
-		resppayload, err := utils.GetActionFromEnvelope(data)
+		resppayload, err := protoutil.GetActionFromEnvelope(data)
 
 		if err == nil {
 			txRWSet := &rwsetutil.TxRwSet{}
