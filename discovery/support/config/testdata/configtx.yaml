@@ -265,8 +265,8 @@ Orderer: &OrdererDefaults
         PreferredMaxBytes: 512 KB
         
         MaxUniqueKeys: 1024
-		SetReorder: 0
-		SetRateControl: 0
+	SetReorder: 0
+	SetRateControl: 0
 
     Kafka:
         # Brokers: A list of Kafka brokers to which the orderer connects. Edit
