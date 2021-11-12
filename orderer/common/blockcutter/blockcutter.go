@@ -301,6 +301,7 @@ func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 //
 // Note that messageBatches can not be greater than 2.
 func (r *receiver) Ordered(msg *cb.Envelope) (messageBatches [][]*cb.Envelope, pending bool) {
+	logger.Infof("Ordered")
 	if len(r.pendingBatch) == 0 {
 		// We are beginning a new batch, mark the time
 		r.PendingBatchStartTime = time.Now()
@@ -378,6 +379,7 @@ func (r *receiver) Ordered(msg *cb.Envelope) (messageBatches [][]*cb.Envelope, p
 // Cut returns the current batch and starts a new one
 func (r *receiver) Cut() []*cb.Envelope {
 
+	logger.Infof("Cut")
 	validBatch, _ := r.ProcessBlock()
 
 	if r.pendingBatch != nil {
@@ -410,6 +412,7 @@ func (r *receiver) Cut() []*cb.Envelope {
 // Process the block and partition it into two blocks
 // containing serialized transactions, and invalid transactions.
 func (r *receiver) ProcessBlock() ([]*cb.Envelope, []*cb.Envelope) {
+	logger.Infof("ProcessBlock")
 	if len(r.pendingBatch) > 1 {
 		graph := make([][]int32, r.txCounter)
 		invgraph := make([][]int32, r.txCounter)
