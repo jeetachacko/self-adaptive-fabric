@@ -205,6 +205,9 @@ func (oc *OrdererConfig) Validate() error {
 }
 
 func (oc *OrdererConfig) validateBatchSize() error {
+
+	logger.Infof("Values oc.protos.BatchSize: %s", oc.protos.BatchSize)
+	logger.Infof("Values BatchSize.MaxMessageCount: %s, BatchSize.AbsoluteMaxBytes: %s, BatchSize.PreferredMaxBytes: %s, BatchSize.MaxUniqueKeys: %s, BatchSize.SetReorder: %s, BatchSize.SetRateControl: %s", oc.protos.BatchSize.MaxMessageCount, oc.protos.BatchSize.AbsoluteMaxBytes, oc.protos.BatchSize.PreferredMaxBytes, oc.protos.BatchSize.MaxUniqueKeys, oc.protos.BatchSize.SetReorder, oc.protos.BatchSize.SetRateControl)
 	if oc.protos.BatchSize.MaxMessageCount == 0 {
 		return fmt.Errorf("Attempted to set the batch size max message count to an invalid value: 0")
 	}

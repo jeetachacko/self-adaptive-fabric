@@ -116,9 +116,9 @@ type BatchSize struct {
 	// The byte count of the serialized messages in a batch should not
 	// exceed this value.
 	PreferredMaxBytes    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=preferredMaxBytes,proto3" json:"preferred_max_bytes,omitempty"`
-	MaxUniqueKeys    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=MaxUniqueKeys,proto3" json:"max_unique_keys,omitempty"`
-	SetReorder    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=SetReorder,proto3" json:"set_reorder,omitempty"`
-	SetRateControl    uint32   `protobuf:"varint,3,opt,name=preferred_max_bytes,json=SetRateControl,proto3" json:"set_rate_control,omitempty"`
+	MaxUniqueKeys    uint32   `protobuf:"varint,4,opt,name=preferred_max_bytes,json=MaxUniqueKeys,proto3" json:"max_unique_keys,omitempty"`
+	SetReorder    uint32   `protobuf:"varint,5,opt,name=preferred_max_bytes,json=SetReorder,proto3" json:"set_reorder,omitempty"`
+	SetRateControl    uint32   `protobuf:"varint,6,opt,name=preferred_max_bytes,json=SetRateControl,proto3" json:"set_rate_control,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
