@@ -207,7 +207,7 @@ func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 						logger.Infof("21ProcessTransaction")
 						readKey := read.GetKey()
 						logger.Infof("22ProcessTransaction")
-						readVer := read.GetVersion()
+						readVer, okread := read.GetVersion()
 						logger.Infof("23ProcessTransaction")
 						key, ok := r.uniqueKeyMap[readKey]
 						logger.Infof("24ProcessTransaction")
@@ -225,25 +225,28 @@ func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 
 						ver, ok := r.keyVersionMap[key]
 						logger.Infof("29ProcessTransaction")
-						if ok {
-							logger.Infof("30ProcessTransaction")
-							if ver.BlockNum == readVer.BlockNum && ver.TxNum == readVer.TxNum{
-								logger.Infof("31ProcessTransaction")
-								r.keyTxMap[key] = append(r.keyTxMap[key], tid)
-							} else {
-								logger.Infof("32ProcessTransaction")
-								for _, tx := range r.keyTxMap[key] {
-									r.invalid[tx] = true
+						if okread {
+							if ok {
+								logger.Infof("30ProcessTransaction")
+								if ver.BlockNum == readVer.BlockNum && ver.TxNum == readVer.TxNum{
+									logger.Infof("31ProcessTransaction")
+									r.keyTxMap[key] = append(r.keyTxMap[key], tid)
+								} else {
+									logger.Infof("32ProcessTransaction")
+									for _, tx := range r.keyTxMap[key] {
+										r.invalid[tx] = true
+									}
+									logger.Infof("33ProcessTransaction")
+									r.keyTxMap[key] = nil
 								}
-								logger.Infof("33ProcessTransaction")
-								r.keyTxMap[key] = nil
+							} else {
+								logger.Infof("34ProcessTransaction")
+								r.keyTxMap[key] = append(r.keyTxMap[key], tid)
+								r.keyVersionMap[key] = readVer
 							}
 						} else {
-							logger.Infof("34ProcessTransaction")
-							r.keyTxMap[key] = append(r.keyTxMap[key], tid)
-							r.keyVersionMap[key] = readVer
+							logger.Debug("readVer error")
 						}
-
 						// set the respective bit in the readSet
 						if key >= r.maxUniqueKeys {
 							logger.Infof("35ProcessTransaction")
