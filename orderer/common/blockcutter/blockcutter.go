@@ -133,89 +133,129 @@ W is stored in column major form
 // serializability check is necessary for this transaction.
 func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 
+	logger.Infof("1ProcessTransaction")
 	// get current transaction id
 	tid := r.txCounter
 
+	logger.Infof("2ProcessTransaction")
+
 	data := make([]byte, messageSizeBytes(msg))
+
+	logger.Infof("3ProcessTransaction")
 
 	var err error
 	data, err = proto.Marshal(msg)
 
+	logger.Infof("4ProcessTransaction")
 	readSet := make([]uint64, r.maxUniqueKeys/64)
 	writeSet := make([]uint64, r.maxUniqueKeys/64)
 
+	logger.Infof("5ProcessTransaction")
+
 	if err == nil {
 		resppayload, err := protoutil.GetActionFromEnvelope(data)
+		logger.Infof("6ProcessTransaction")
 
 		if err == nil {
 			txRWSet := &rwsetutil.TxRwSet{}
+			logger.Infof("7ProcessTransaction")
 			if err = txRWSet.FromProtoBytes(resppayload.Results); err != nil {
+				logger.Infof("8ProcessTransaction")
 				logger.Infof("from proto bytes error")
 			} else {
+				logger.Infof("9ProcessTransaction")
 				for _, ns := range txRWSet.NsRwSets[1:] {
+					logger.Infof("10ProcessTransaction")
 
 					// generate key for each key in the read and write set and use it to insert the read/write key into RW matrices
 					for _, write := range ns.KvRwSet.Writes {
+						logger.Infof("11ProcessTransaction")
 						writeKey := write.GetKey()
+						logger.Infof("12ProcessTransaction")
 
 						// check if the key exists
 						key, ok := r.uniqueKeyMap[writeKey]
+						logger.Infof("13ProcessTransaction")
 
 						if ok == false {
+							logger.Infof("14ProcessTransaction")
 							// if the key is not found, insert and increment
 							// the key counter
 							r.uniqueKeyMap[writeKey] = r.uniqueKeyCounter
+							logger.Infof("15ProcessTransaction")
 							key = r.uniqueKeyCounter
+							logger.Infof("16ProcessTransaction")
 							r.uniqueKeyCounter += 1
+							logger.Infof("17ProcessTransaction")
 						}
 						// set the respective bit in the writeSet
 
 						if key >= r.maxUniqueKeys {
+							logger.Infof("18ProcessTransaction")
 							// overflow of maxUniqueKeys
 							// cut the block, and redo the work
 							return true
 						}
 
 						index := key / 64
+						logger.Infof("19ProcessTransaction")
 						writeSet[index] |= (uint64(1) << (key % 64))
+						logger.Infof("20ProcessTransaction")
 					}
 
 					for _, read := range ns.KvRwSet.Reads {
+						logger.Infof("21ProcessTransaction")
 						readKey := read.GetKey()
+						logger.Infof("22ProcessTransaction")
 						readVer := read.GetVersion()
+						logger.Infof("23ProcessTransaction")
 						key, ok := r.uniqueKeyMap[readKey]
+						logger.Infof("24ProcessTransaction")
 						if ok == false {
+							logger.Infof("25ProcessTransaction")
 							// if the key is not found, it is inserted. So increment
 							// the key counter
 							r.uniqueKeyMap[readKey] = r.uniqueKeyCounter
+							logger.Infof("26ProcessTransaction")
 							key = r.uniqueKeyCounter
+							logger.Infof("27ProcessTransaction")
 							r.uniqueKeyCounter += 1
+							logger.Infof("28ProcessTransaction")
 						}
 
 						ver, ok := r.keyVersionMap[key]
+						logger.Infof("29ProcessTransaction")
 						if ok {
+							logger.Infof("30ProcessTransaction")
 							if ver.BlockNum == readVer.BlockNum && ver.TxNum == readVer.TxNum{
+								logger.Infof("31ProcessTransaction")
 								r.keyTxMap[key] = append(r.keyTxMap[key], tid)
 							} else {
+								logger.Infof("32ProcessTransaction")
 								for _, tx := range r.keyTxMap[key] {
 									r.invalid[tx] = true
 								}
+								logger.Infof("33ProcessTransaction")
 								r.keyTxMap[key] = nil
 							}
 						} else {
+							logger.Infof("34ProcessTransaction")
 							r.keyTxMap[key] = append(r.keyTxMap[key], tid)
 							r.keyVersionMap[key] = readVer
 						}
 
 						// set the respective bit in the readSet
 						if key >= r.maxUniqueKeys {
+							logger.Infof("35ProcessTransaction")
 							// overflow of maxUniqueKeys
 							// cut the block, and redo the work
 							return true
 						}
 
 						index := key / 64
+						logger.Infof("36ProcessTransaction")
 						readSet[index] |= (uint64(1) << (key % 64))
+						logger.Infof("37ProcessTransaction")
 					}
 
 				}
@@ -223,15 +263,19 @@ func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 				// make sure the number of unique keys in the block will not overflow
 			}
 		} else {
+			logger.Infof("38ProcessTransaction")
 
 			logger.Debug("resppayload error")
 		}
 	}
 
+	logger.Infof("39ProcessTransaction")
 	r.txReadSet[tid] = readSet
+	logger.Infof("40ProcessTransaction")
 	r.txWriteSet[tid] = writeSet
+	logger.Infof("41ProcessTransaction")
 	r.txCounter += 1
-
+	logger.Infof("42ProcessTransaction")
 	return false
 }
 
