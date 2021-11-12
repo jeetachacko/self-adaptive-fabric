@@ -207,7 +207,7 @@ func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 						logger.Infof("21ProcessTransaction")
 						readKey := read.GetKey()
 						logger.Infof("22ProcessTransaction")
-						readVer, okread := read.GetVersion()
+						readVer := read.GetVersion()
 						logger.Infof("23ProcessTransaction")
 						key, ok := r.uniqueKeyMap[readKey]
 						logger.Infof("24ProcessTransaction")
@@ -225,7 +225,7 @@ func (r *receiver) ProcessTransaction(msg *cb.Envelope) bool {
 
 						ver, ok := r.keyVersionMap[key]
 						logger.Infof("29ProcessTransaction")
-						if okread {
+						if readVer != nil {
 							if ok {
 								logger.Infof("30ProcessTransaction")
 								if ver.BlockNum == readVer.BlockNum && ver.TxNum == readVer.TxNum{
